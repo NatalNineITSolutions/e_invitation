@@ -22,10 +22,18 @@ export default function SplashDoor({
 }: SplashDoorProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
-  const videoSource = config.images.doorVideo || "/Door_open.mp4";
+  const [showEndingText, setShowEndingText] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const videoSource = config.images.doorVideo || "/f1.mp4";
+  const endingTextTriggered = useRef(false);
+  const transitionTriggered = useRef(false);
 
   // When user clicks "TOUCH THE DOOR", play video directly right here on the home screen
   const handleTouchDoor = () => {
+    endingTextTriggered.current = false;
+    transitionTriggered.current = false;
+    setShowEndingText(false);
+    setIsTransitioning(false);
     const video = videoRef.current;
     if (video) {
       video.muted = isMuted;
@@ -44,9 +52,31 @@ export default function SplashDoor({
     }
   };
 
-  // When the video finishes playing, go inside to the invitation
+  // 1. Keep video clean while playing!
+  // 2. Only at the very last part of the video (~2.8 seconds before end), the inside text smoothly fades in over the open door one-by-one.
+  // 3. Exactly when video ends, fade out and transition seamlessly into the inside page below.
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (!video || !video.duration) return;
+
+    const remaining = video.duration - video.currentTime;
+
+    // Show inside page text when video is nearing completion (last ~2.8 seconds)
+    if (remaining <= 2.8 && !endingTextTriggered.current) {
+      endingTextTriggered.current = true;
+      setShowEndingText(true);
+    }
+  };
+
+  // Video has ended: the video screen slides up like a scroll curtain to reveal the inside page
   const handleVideoEnded = () => {
-    onTapDoor();
+    if (!transitionTriggered.current) {
+      transitionTriggered.current = true;
+      setIsTransitioning(true);
+      setTimeout(() => {
+        onTapDoor();
+      }, 950);
+    }
   };
 
   useEffect(() => {
@@ -56,16 +86,21 @@ export default function SplashDoor({
   }, [isMuted]);
 
   return (
-    <div className="relative w-full h-100dvh min-h-100dvh overflow-hidden bg-black select-none flex flex-col justify-between">
+    <div className={`relative w-full h-100dvh min-h-100dvh overflow-hidden bg-black select-none flex flex-col justify-between transition-transform duration-1000 ease-in-out ${
+      isTransitioning ? '-translate-y-full opacity-90' : 'translate-y-0 opacity-100'
+    }`}>
       
       {/* 1080P DOOR VIDEO (CLEAN FULL-SCREEN BACKGROUND) */}
-      <div className="absolute inset-0 z-0 w-full h-full flex items-center justify-center bg-black overflow-hidden pointer-events-none">
+      <div 
+        className="absolute inset-0 z-0 w-full h-full flex items-center justify-center bg-black overflow-hidden pointer-events-none"
+      >
         <video
           key={videoSource}
           ref={videoRef}
           src={videoSource}
           playsInline
           preload="auto"
+          onTimeUpdate={handleTimeUpdate}
           onEnded={handleVideoEnded}
           className="w-full h-full object-cover object-center"
         >
@@ -130,17 +165,78 @@ export default function SplashDoor({
             {config.coupleNames} · {config.event.dateDisplay}
           </motion.p>
         </div>
-      ) : (
-        /* While video is playing: minimal sleek indicator */
+      ) : showEndingText ? (
+        /* Only at the very last of the video: as doors open wide, reveal inside page elements ONE BY ONE */
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative z-30 pb-6 text-center pointer-events-none mt-auto"
+          className="relative z-30 w-full pb-8 sm:pb-12 px-6 flex flex-col items-center text-center mt-auto pointer-events-none"
         >
-          <p className="font-display text-xs md:text-sm tracking-[0.3em] uppercase text-gold/90 font-semibold drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-            Entering the Sacred Home...
-          </p>
+          {/* 1. First: Sacred ॐ */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center mb-1"
+          >
+            <span className="font-display text-3xl sm:text-4xl text-gold-bright gold-glow drop-shadow-[0_2px_12px_rgba(243,215,142,0.8)]">
+              ॐ
+            </span>
+          </motion.div>
+
+          {/* 2. Second: || Shubhamastu || */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            className="font-display text-[11px] sm:text-xs tracking-[0.35em] uppercase text-gold/90 font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] mb-1"
+          >
+            || Shubhamastu ||
+          </motion.p>
+
+          {/* 3. Third: Grand Griha Pravesha Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display font-serif text-3xl sm:text-5xl md:text-6xl text-gold-gradient tracking-[0.08em] font-medium drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]"
+          >
+            Griha Pravesha
+          </motion.h1>
+
+          {/* 4. Fourth: Couple names & Date */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
+            className="mt-2 text-xs sm:text-sm font-display tracking-[0.25em] uppercase text-cream/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
+          >
+            {config.coupleNames} · {config.event.dateDisplay}
+          </motion.p>
+
+          {/* 5. Fifth: "Scroll to explore" pulse chevron */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 1.2 }}
+            className="mt-4 flex flex-col items-center pointer-events-auto cursor-pointer"
+            onClick={onTapDoor}
+          >
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+              className="flex items-center justify-center w-8 h-8 rounded-full border border-gold/60 bg-black/50 backdrop-blur-sm text-gold shadow-[0_0_15px_rgba(232,200,115,0.4)]"
+            >
+              <ChevronRight className="w-4 h-4 rotate-90 text-gold-bright" />
+            </motion.div>
+            <span className="mt-1 text-[10px] tracking-[0.25em] uppercase text-gold/70 font-display">
+              Scroll down
+            </span>
+          </motion.div>
         </motion.div>
+      ) : (
+        /* While video is running its main opening sequence: keep screen pure and immersive */
+        <div className="relative z-30 pb-6 mt-auto pointer-events-none" />
       )}
     </div>
   );

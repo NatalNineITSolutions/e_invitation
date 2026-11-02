@@ -15,7 +15,7 @@ export default function DoorOpeningVideo({
   onSkip
 }: DoorOpeningVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const videoSource = config.images.doorVideo || "/Door_open.mp4";
+  const videoSource = config.images.doorVideo || "/f1.mp4";
 
   useEffect(() => {
     const video = videoRef.current;
