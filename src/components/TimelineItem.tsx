@@ -106,18 +106,18 @@ export default function TimelineItem({ item, index }: TimelineItemProps) {
       <div className="w-full md:w-[50%] flex flex-col items-center md:items-start md:pl-10 text-center md:text-left px-4 md:px-0">
         <div className="flex items-center space-x-1.5 md:space-x-0">
           <span className="md:hidden text-xs">🪷</span>
-          <h4 className="font-display font-bold text-sm sm:text-base md:text-lg tracking-wider sm:tracking-widest text-maroon uppercase leading-tight">
+          <h4 className="font-sans font-bold text-base sm:text-lg md:text-xl tracking-wide text-maroon uppercase leading-tight">
             {item.title}
           </h4>
         </div>
 
         <div className="mt-1.5">
-          <span className="text-[11px] sm:text-xs md:text-xs font-display font-semibold text-[#8B6A1F] tracking-wider bg-gold/15 px-3 py-0.5 rounded-full border border-gold/35">
+          <span className="text-xs sm:text-sm font-sans font-semibold text-[#8B6A1F] tracking-wide bg-gold/15 px-3.5 py-1 rounded-full border border-gold/40 inline-block shadow-2xs">
             {item.time}
           </span>
         </div>
 
-        <p className="mt-1.5 font-body text-xs sm:text-sm md:text-sm text-brown/85 leading-snug max-w-[280px] md:max-w-[240px]">
+        <p className="mt-2 font-sans text-xs sm:text-sm text-brown/90 leading-relaxed font-normal max-w-[320px] md:max-w-[280px]">
           {item.note}
         </p>
       </div>

@@ -15,7 +15,7 @@ export default function DoorOpeningVideo({
   onSkip
 }: DoorOpeningVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const videoSource = config.images.doorVideo || "/create_a_video_1080p_20261027170333.mp4";
+  const videoSource = config.images.doorVideo || "/Door_open.mp4";
 
   useEffect(() => {
     const video = videoRef.current;
@@ -62,8 +62,7 @@ export default function DoorOpeningVideo({
           className="w-full h-full object-cover object-center"
         >
           <source src={videoSource} type="video/mp4" />
-          <source src="/create_a_video_1080p_20261027170333.mp4" type="video/mp4" />
-          <source src="/assets/create_a_video_1080p_20261027170333.mp4" type="video/mp4" />
+          <source src="/smoothy_video_play_da8a85d3_1080p.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>

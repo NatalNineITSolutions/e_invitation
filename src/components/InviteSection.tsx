@@ -52,11 +52,11 @@ export default function InviteSection({
         </motion.p>
 
         <motion.h2
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="font-script text-5xl sm:text-6xl md:text-7xl text-maroon my-3 drop-shadow-xs"
+          className="font-display font-bold text-2xl sm:text-4xl md:text-5xl text-maroon uppercase tracking-[0.15em] my-3 drop-shadow-xs"
         >
           {config.displayNames}
         </motion.h2>

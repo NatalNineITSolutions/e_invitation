@@ -14,6 +14,7 @@ interface ImportMetaEnv {
   readonly VITE_FAMILY_SUBTITLE?: string;
   readonly VITE_TAGLINE?: string;
   readonly VITE_SUB_TAGLINE?: string;
+  readonly VITE_INVITATION_PREFIX?: string;
   readonly VITE_INVITATION_BODY?: string;
   readonly VITE_CLOSING_MESSAGE?: string;
   readonly VITE_EVENT_DATE_DISPLAY?: string;
