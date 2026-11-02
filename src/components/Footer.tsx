@@ -14,7 +14,7 @@ export default function Footer({ config }: FooterProps) {
     const icsContent = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//Ramya & Rishi//Griha Pravesha//EN',
+      `PRODID:-//${config.coupleNames}//Griha Pravesha//EN`,
       'BEGIN:VEVENT',
       `SUMMARY:${calendarEvent.title}`,
       `DESCRIPTION:${calendarEvent.description}`,
@@ -29,7 +29,8 @@ export default function Footer({ config }: FooterProps) {
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', 'Ramya_Rishi_Griha_Pravesha.ics');
+    const sanitizedFileName = config.coupleNames.replace(/[^a-zA-Z0-9]/g, '_');
+    link.setAttribute('download', `${sanitizedFileName}_Griha_Pravesha.ics`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -50,11 +51,11 @@ export default function Footer({ config }: FooterProps) {
       </motion.p>
 
       <motion.h4
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.15 }}
-        className="mt-5 font-script text-4xl sm:text-5xl text-maroon"
+        className="mt-5 font-display font-bold text-xl sm:text-2xl md:text-3xl text-maroon uppercase tracking-[0.16em]"
       >
         {config.coupleNames}
       </motion.h4>

@@ -38,7 +38,7 @@ export default function DetailsGrid({ config }: DetailsGridProps) {
   ];
 
   return (
-    <section className="relative w-full bg-wood-brown py-10 md:py-16 px-4 sm:px-6 my-6 md:my-8 shadow-inner select-none flex flex-col items-center">
+    <section className="relative w-full bg-wood-brown py-10 md:py-16 px-4 sm:px-6 mt-6 md:mt-8 mb-0 shadow-inner select-none flex flex-col items-center">
       <div className="absolute inset-0 bg-gradient-to-b from-[#2E1B10] via-wood-brown to-[#25150C] opacity-95 pointer-events-none" />
 
       <div className="relative z-10 text-center mb-6 max-w-lg px-2">
@@ -76,15 +76,15 @@ export default function DetailsGrid({ config }: DetailsGridProps) {
                   <Icon className="w-5 h-5 text-[#8B6A1F]" strokeWidth={1.5} />
                 </div>
 
-                <span className="font-display text-[10px] md:text-xs uppercase tracking-[0.25em] text-[#8B6A1F] font-bold">
+                <span className="font-sans text-[11px] sm:text-xs uppercase tracking-wider text-[#8B6A1F] font-bold">
                   {item.label}
                 </span>
 
-                <p className="font-body font-bold text-base md:text-xl text-maroon mt-0.5 leading-snug">
+                <p className="font-sans font-bold text-base sm:text-lg md:text-xl text-maroon mt-1 leading-snug">
                   {item.primary}
                 </p>
 
-                <p className="font-body text-xs md:text-sm text-brown/80 mt-0.5 leading-relaxed">
+                <p className="font-sans text-xs sm:text-sm text-brown/85 mt-1 leading-relaxed font-normal">
                   {item.secondary}
                 </p>
               </div>

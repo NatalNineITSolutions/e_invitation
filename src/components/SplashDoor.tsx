@@ -22,7 +22,7 @@ export default function SplashDoor({
 }: SplashDoorProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
-  const videoSource = config.images.doorVideo || "/create_a_video_1080p_20261027170333.mp4";
+  const videoSource = config.images.doorVideo || "/Door_open.mp4";
 
   // When user clicks "TOUCH THE DOOR", play video directly right here on the home screen
   const handleTouchDoor = () => {
@@ -61,15 +61,15 @@ export default function SplashDoor({
       {/* 1080P DOOR VIDEO (CLEAN FULL-SCREEN BACKGROUND) */}
       <div className="absolute inset-0 z-0 w-full h-full flex items-center justify-center bg-black overflow-hidden pointer-events-none">
         <video
+          key={videoSource}
           ref={videoRef}
+          src={videoSource}
           playsInline
           preload="auto"
           onEnded={handleVideoEnded}
           className="w-full h-full object-cover object-center"
         >
           <source src={videoSource} type="video/mp4" />
-          <source src="/create_a_video_1080p_20261027170333.mp4" type="video/mp4" />
-          <source src="/assets/create_a_video_1080p_20261027170333.mp4" type="video/mp4" />
         </video>
       </div>
 

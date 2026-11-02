@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Sparkles } from 'lucide-react';
 import OrnamentDivider from './OrnamentDivider';
 import { InviteConfig } from '../data/invite';
 
@@ -15,14 +15,14 @@ export default function GaneshaHero({ config, onScrollNext }: GaneshaHeroProps) 
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.18,
-        delayChildren: 0.2,
+        staggerChildren: 0.16,
+        delayChildren: 0.15,
       },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 22 },
+    hidden: { opacity: 0, y: 18 },
     visible: {
       opacity: 1,
       y: 0,
@@ -31,133 +31,146 @@ export default function GaneshaHero({ config, onScrollNext }: GaneshaHeroProps) 
   };
 
   return (
-    <section className="relative w-full h-100dvh min-h-100dvh overflow-hidden bg-temple-black flex flex-col justify-between items-center text-center select-none snap-start">
+    <section className="relative w-full min-h-100dvh overflow-hidden bg-gradient-to-b from-[#070503] via-[#120B06] to-[#070503] flex flex-col justify-between items-center text-center select-none snap-start py-6 sm:py-8">
       
-      {/* POOJA ROOM SANCTUM BACKGROUND */}
-      <div className="absolute inset-0 z-0">
+      {/* DIVINE SANCTUM ATMOSPHERE BACKGROUND */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <img
           src={config.images.ganeshaAlcove}
-          alt="Lord Ganesha idol in sanctum"
-          loading="lazy"
-          className="w-full h-full object-cover object-center opacity-50 scale-105"
+          alt="Lord Ganesha golden murti in sacred sanctum"
+          loading="eager"
+          className="w-full h-full object-cover object-center opacity-30 md:opacity-35 scale-105 filter blur-xs"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0907]/90 via-[#0B0907]/35 to-[#0B0907]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(201,162,75,0.3)_0%,transparent_70%)]" />
+        {/* Multi-layered cinematic gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#070503] via-[#0E0804]/75 to-[#070503]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(243,215,142,0.22)_0%,rgba(139,106,31,0.12)_45%,transparent_75%)]" />
       </div>
 
-      {/* FLOATING LIGHT SPARKS PARTICLES */}
+      {/* FLOATING LIGHT SPARKS & DIYA PARTICLES */}
       <div className="absolute inset-0 z-1 pointer-events-none overflow-hidden">
-        {[...Array(16)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <span
             key={i}
-            className="absolute rounded-full bg-[#FFE58F] animate-float-particle opacity-65"
+            className="absolute rounded-full bg-[#FFE58F] animate-float-particle opacity-70"
             style={{
               width: `${(i % 3) + 2}px`,
               height: `${(i % 3) + 2}px`,
-              top: `${16 + (i * 5)}%`,
-              left: `${10 + ((i * 19) % 80)}%`,
-              animationDelay: `${i * 0.4}s`,
+              top: `${15 + (i * 4)}%`,
+              left: `${8 + ((i * 17) % 84)}%`,
+              animationDelay: `${i * 0.35}s`,
               animationDuration: `${4.5 + (i % 3)}s`
             }}
           />
         ))}
       </div>
 
-      {/* TOP: CARVED ARCH WITH GLOWING GOLDEN "ॐ" */}
-      <div className="relative z-10 w-full pt-8 md:pt-14 px-4 flex flex-col items-center">
+      {/* TOP: ROYAL SACRED EMBLEM WITH GLOWING "ॐ" */}
+      <div className="relative z-10 w-full pt-2 sm:pt-4 px-4 flex flex-col items-center">
         <motion.div 
           initial={{ opacity: 0, y: -20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.1, ease: "easeOut" }}
+          transition={{ duration: 1, ease: "easeOut" }}
           className="flex flex-col items-center"
         >
-          <div className="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full border border-gold/45 bg-temple-black/60 backdrop-blur-md shadow-[0_0_30px_rgba(232,200,115,0.6)]">
-            <span className="font-display text-2xl md:text-3xl font-bold text-gold-bright gold-glow">
+          <div className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#E8C873]/60 bg-gradient-to-b from-[#2E1B10]/90 to-[#120B06]/90 backdrop-blur-md shadow-[0_0_25px_rgba(232,200,115,0.5)]">
+            <span className="font-display text-2xl sm:text-3xl font-bold text-gold-bright gold-glow">
               ॐ
             </span>
           </div>
 
-          <div className="w-56 md:w-72 h-6 flex justify-center items-center mt-3 opacity-90">
-            <div className="h-[1px] w-16 md:w-24 bg-gradient-to-r from-transparent to-gold" />
-            <span className="px-3 text-sm md:text-base text-gold">🌺</span>
-            <div className="h-[1px] w-16 md:w-24 bg-gradient-to-l from-transparent to-gold" />
+          <div className="flex items-center space-x-2 mt-2.5 opacity-90">
+            <div className="h-[1px] w-12 sm:w-20 bg-gradient-to-r from-transparent to-gold" />
+            <Sparkles className="w-3.5 h-3.5 text-gold-bright animate-pulse" />
+            <span className="font-display text-[11px] sm:text-xs uppercase tracking-[0.35em] text-[#F3D78E] font-medium">
+              Vakratunda Mahakaya
+            </span>
+            <Sparkles className="w-3.5 h-3.5 text-gold-bright animate-pulse" />
+            <div className="h-[1px] w-12 sm:w-20 bg-gradient-to-l from-transparent to-gold" />
           </div>
         </motion.div>
       </div>
 
-      {/* CENTER: GANESHA IDOL HALO */}
+      {/* CENTER: MAJESTIC GOLDEN GANESHA SANCTUM PORTRAIT */}
       <motion.div 
-        initial={{ opacity: 0, scale: 0.85 }}
+        initial={{ opacity: 0, scale: 0.88 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, delay: 0.25 }}
-        className="relative z-10 flex flex-col items-center my-auto px-6 max-w-xl"
+        transition={{ duration: 1.1, delay: 0.2 }}
+        className="relative z-10 flex flex-col items-center my-auto px-4 max-w-lg"
       >
-        <div className="relative p-1.5 rounded-full border border-gold/35 bg-gradient-to-b from-gold/25 via-transparent to-transparent shadow-[0_0_45px_rgba(201,162,75,0.4)]">
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full border border-[#E8C873]/50 flex items-center justify-center bg-temple-black/50 backdrop-blur-sm">
-            <svg 
-              viewBox="0 0 100 100" 
-              className="w-18 h-18 md:w-24 md:h-24 text-[#F3D78E] fill-current drop-shadow-[0_0_14px_rgba(243,215,142,0.9)]"
-              aria-label="Lord Ganesha Motif"
-            >
-              <polygon points="50,12 40,24 60,24" />
-              <circle cx="50" cy="10" r="2.5" />
-              <path d="M40 28 C26 28 20 40 28 50 C36 50 38 42 40 38 Z" opacity="0.9" />
-              <path d="M60 28 C74 28 80 40 72 50 C64 50 62 42 60 38 Z" opacity="0.9" />
-              <ellipse cx="50" cy="35" rx="10" ry="8" />
-              <line x1="45" y1="32" x2="55" y2="32" stroke="#5A1F1A" strokeWidth="2" />
-              <circle cx="50" cy="35" r="1.5" fill="#5A1F1A" />
-              <path d="M47 38 C47 48 45 62 55 64 C62 65 65 59 62 55 C59 52 53 54 52 58" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-              <circle cx="68" cy="55" r="3" fill="#FFE58F" />
-            </svg>
+        {/* Ornate Gold Sunburst Halo Ring */}
+        <div className="relative p-2 rounded-full bg-gradient-to-b from-[#E8C873]/40 via-[#8B6A1F]/30 to-transparent shadow-[0_0_55px_rgba(232,200,115,0.45)]">
+          
+          {/* Framed Glowing Medallion with Idol */}
+          <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 rounded-full overflow-hidden border-2 border-[#F3D78E] shadow-2xl bg-black">
+            <img
+              src={config.images.ganeshaAlcove}
+              alt="Lord Ganesha"
+              className="w-full h-full object-cover object-center filter brightness-105 contrast-105 transition-transform duration-700 hover:scale-105"
+            />
+            {/* Soft inner radial vignette */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,transparent_50%,rgba(7,5,3,0.5)_100%)] pointer-events-none" />
+          </div>
+
+          {/* Golden Bell / Diya Badges */}
+          <div className="absolute -bottom-2 inset-x-0 flex justify-center pointer-events-none">
+            <span className="py-1 px-4 rounded-full border border-gold/70 bg-[#1B1109]/95 text-gold-bright text-[10px] sm:text-xs font-display tracking-[0.25em] uppercase shadow-lg backdrop-blur-md">
+              Shree Ganeshayana
+            </span>
           </div>
         </div>
 
-        <p className="mt-4 text-xs md:text-sm font-display tracking-[0.3em] uppercase text-ivory/85">
-          Vakratunda Mahakaya · Surya Koti Samaprabha
+        <p className="mt-5 text-xs sm:text-sm font-display tracking-[0.28em] uppercase text-cream/90 font-light">
+          Surya Koti Samaprabha · Nirvighnam Kuru Me Deva
         </p>
       </motion.div>
 
-      {/* BOTTOM AREA: FADES TO BLACK WITH STAGGERED REVEALS */}
+      {/* BOTTOM AREA: ROYAL INVOCATION & COMMENCEMENT CALLOUT */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="relative z-10 w-full px-6 pb-6 md:pb-12 pt-6 flex flex-col items-center bg-gradient-to-t from-temple-black via-temple-black/95 to-transparent"
+        className="relative z-10 w-full px-4 sm:px-6 pb-4 sm:pb-8 pt-4 flex flex-col items-center"
       >
-        <motion.p variants={itemVariants} className="font-display text-xs md:text-sm tracking-[0.35em] uppercase text-gold font-semibold mb-1">
-          {config.invocation.prefix}
-        </motion.p>
+        <motion.div variants={itemVariants} className="flex items-center space-x-2 mb-1.5">
+          <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-gold" />
+          <p className="font-display text-xs sm:text-sm tracking-[0.35em] uppercase text-gold-bright font-semibold">
+            {config.invocation.prefix}
+          </p>
+          <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-gold" />
+        </motion.div>
 
         <motion.h1 
           variants={itemVariants}
-          className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl uppercase tracking-[0.2em] leading-tight text-gold-gradient drop-shadow-lg"
+          className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl uppercase tracking-[0.22em] leading-tight text-gold-gradient drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
         >
-          GRIHA<br />PRAVESHA
+          GRIHA<br />PRAVESH
         </motion.h1>
 
         <motion.div variants={itemVariants} className="w-full">
-          <OrnamentDivider variant="gold" className="my-3 max-w-[220px] md:max-w-xs mx-auto" />
+          <OrnamentDivider variant="gold" className="my-2.5 max-w-[200px] sm:max-w-xs mx-auto" />
         </motion.div>
 
-        <motion.p variants={itemVariants} className="font-body italic text-base sm:text-2xl text-cream/90 leading-snug">
+        <motion.p variants={itemVariants} className="font-body italic text-base sm:text-2xl text-cream leading-snug">
           &ldquo;{config.tagline}&rdquo;<br />
-          <span className="text-sm sm:text-xl text-cream/75">{config.subTagline}</span>
+          <span className="text-xs sm:text-lg text-cream/80 tracking-wide font-normal">{config.subTagline}</span>
         </motion.p>
 
-        <motion.div variants={itemVariants} className="mt-4 py-1.5 px-6 rounded-full border border-gold/40 bg-gold/10">
-          <p className="font-display text-xs sm:text-sm uppercase tracking-[0.3em] text-gold font-semibold">
+        {/* Date & City Tag */}
+        <motion.div variants={itemVariants} className="mt-3.5 py-1.5 px-6 rounded-full border border-gold/50 bg-gradient-to-r from-[#2E1B10]/80 via-[#3B2314]/80 to-[#2E1B10]/80 shadow-md backdrop-blur-xs">
+          <p className="font-display text-xs sm:text-sm uppercase tracking-[0.28em] text-gold-bright font-semibold">
             {config.event.dateShort} · {config.event.city}
           </p>
         </motion.div>
 
+        {/* Scroll Next CTA Button */}
         <motion.button
           variants={itemVariants}
           onClick={onScrollNext}
           aria-label="Scroll down to invitation"
-          className="mt-4 w-10 h-10 md:w-12 md:h-12 rounded-full border border-gold/50 flex items-center justify-center text-gold hover:border-gold hover:bg-gold/15 transition-all shadow-md animate-bounce focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+          className="mt-3 w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gold/60 flex items-center justify-center text-gold hover:border-gold-bright hover:bg-gold/15 transition-all shadow-[0_0_15px_rgba(201,162,75,0.3)] animate-bounce focus:outline-none focus-visible:ring-2 focus-visible:ring-gold cursor-pointer"
         >
-          <ChevronDown className="w-5 h-5 md:w-6 md:h-6" />
+          <ChevronDown className="w-5 h-5 text-gold-bright" />
         </motion.button>
       </motion.div>
     </section>

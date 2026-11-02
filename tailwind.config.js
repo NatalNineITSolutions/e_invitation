@@ -21,6 +21,7 @@ export default {
         display: ['Cinzel', 'serif'],
         body: ['"Cormorant Garamond"', 'serif'],
         script: ['"Great Vibes"', 'cursive'],
+        sans: ['Outfit', 'system-ui', '-apple-system', 'sans-serif'],
       },
       backgroundImage: {
         'gold-gradient': 'linear-gradient(135deg, #8B6A1F 0%, #E8C873 50%, #8B6A1F 100%)',

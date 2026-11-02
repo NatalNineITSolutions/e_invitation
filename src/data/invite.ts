@@ -62,6 +62,7 @@ const subTitle = env.VITE_FAMILY_SUBTITLE || "Together with their parents & fami
 const tagline = env.VITE_TAGLINE || "A New Home, A New Beginning.";
 const subTagline = env.VITE_SUB_TAGLINE || "Blessed with Love & Happiness.";
 const closingMessage = env.VITE_CLOSING_MESSAGE || "May our new home be filled with happiness, health, prosperity and divine blessings today and always.";
+const invitationPrefix = env.VITE_INVITATION_PREFIX || "|| Shri Ganeshaya Namah ||";
 const invitationBody = env.VITE_INVITATION_BODY || "With divine blessings and your loving presence, we step into our new home and a new chapter of our lives. Your presence will make this day even more special.";
 
 const dateDisplay = env.VITE_EVENT_DATE_DISPLAY || "11th November 2026";
@@ -75,8 +76,8 @@ const venueAddress = env.VITE_VENUE_ADDRESS || "Sector 2, HSR Layout, Bangalore,
 const mapLink = env.VITE_MAP_LINK || "https://maps.google.com/?q=HSR+Layout+Bangalore";
 const blessingsOnlyNote = env.VITE_BLESSINGS_NOTE || "Your blessings are our greatest gift";
 
-const doorVideo = env.VITE_DOOR_VIDEO || "/create_a_video_1080p_20261027170333.mp4";
-const couplePhoto = env.VITE_COUPLE_PHOTO || "/assets/couple-full.jpg";
+const doorVideo = env.VITE_DOOR_VIDEO || "/Door_open.mp4";
+const couplePhoto = env.VITE_COUPLE_PHOTO || "/assets/Elegant Indian Housewarming Invitation.png";
 const audioUrl = env.VITE_AUDIO_URL || "https://cdn.pixabay.com/download/audio/2022/05/16/audio_c899d45367.mp3?filename=indian-meditation-ambient-flute-111100.mp3";
 
 
@@ -124,8 +125,7 @@ const defaultProgram: ProgramItemType[] = [
   }
 ];
 
-// Optional full JSON override via VITE_PROGRAM_ITEMS_JSON
-function parseProgramItems(): ProgramItemType[] {
+function getProgramItems(): ProgramItemType[] {
   if (env.VITE_PROGRAM_ITEMS_JSON) {
     try {
       const parsed = JSON.parse(env.VITE_PROGRAM_ITEMS_JSON);
@@ -136,6 +136,62 @@ function parseProgramItems(): ProgramItemType[] {
       console.warn("Failed to parse VITE_PROGRAM_ITEMS_JSON:", e);
     }
   }
+
+  // If specific program 1 title is set in env, build dynamically based on set programs
+  if (env.VITE_PROGRAM_1_TITLE) {
+    const items: ProgramItemType[] = [];
+    const iconMap: Record<number, { type: string; img: string }> = {
+      1: { type: "ganesha", img: "/assets/icon-ganesha.png" },
+      2: { type: "door", img: "/assets/icon-door.png" },
+      3: { type: "meal", img: "/assets/icon-meal.png" },
+      4: { type: "lamp", img: "/assets/icon-lamp.png" },
+      5: { type: "kalasam", img: "/assets/icon-kalasam.png" },
+    };
+
+    const count = 5;
+    for (let i = 1; i <= count; i++) {
+      const title = (env as Record<string, string | undefined>)[`VITE_PROGRAM_${i}_TITLE`];
+      const time = (env as Record<string, string | undefined>)[`VITE_PROGRAM_${i}_TIME`];
+      const note = (env as Record<string, string | undefined>)[`VITE_PROGRAM_${i}_NOTE`];
+
+      if (title) {
+        const lowerTitle = title.toLowerCase();
+        let iconType = iconMap[i]?.type || "door";
+        let iconImg = iconMap[i]?.img || "/assets/icon-door.png";
+
+        if (lowerTitle.includes("ganapath") || lowerTitle.includes("homam") || lowerTitle.includes("ganesha")) {
+          iconType = "ganesha";
+          iconImg = "/assets/icon-ganesha.png";
+        } else if (lowerTitle.includes("griha") || lowerTitle.includes("pravesh") || lowerTitle.includes("door")) {
+          iconType = "door";
+          iconImg = "/assets/icon-door.png";
+        } else if (lowerTitle.includes("breakfast") || lowerTitle.includes("lunch") || lowerTitle.includes("feast") || lowerTitle.includes("dinner")) {
+          iconType = "meal";
+          iconImg = "/assets/icon-meal.png";
+        } else if (lowerTitle.includes("puja") || lowerTitle.includes("satyanarayana") || lowerTitle.includes("lamp")) {
+          iconType = "lamp";
+          iconImg = "/assets/icon-lamp.png";
+        } else if (lowerTitle.includes("punyaha") || lowerTitle.includes("kalasam")) {
+          iconType = "kalasam";
+          iconImg = "/assets/icon-kalasam.png";
+        }
+
+        items.push({
+          id: `program-${i}-${lowerTitle.replace(/[^a-z0-9]/g, "-")}`,
+          title,
+          time: time || "",
+          iconType,
+          note: note || "",
+          iconImg
+        });
+      }
+    }
+
+    if (items.length > 0) {
+      return items;
+    }
+  }
+
   return defaultProgram;
 }
 
@@ -148,7 +204,7 @@ export const inviteData: InviteConfig = {
   closingMessage,
 
   invocation: {
-    prefix: "|| Shubhamastu ||",
+    prefix: invitationPrefix,
     title: "Griha Pravesha",
     body: invitationBody,
   },
@@ -172,7 +228,7 @@ export const inviteData: InviteConfig = {
     }
   },
 
-  program: parseProgramItems(),
+  program: getProgramItems(),
 
   music: {
     audioUrl,
@@ -183,7 +239,7 @@ export const inviteData: InviteConfig = {
   images: {
     door: "/assets/door.jpg",
     floor: "/assets/floor.jpg",
-    ganeshaAlcove: "https://images.unsplash.com/photo-1567591414240-e144a8677c77?q=80&w=1200&auto=format&fit=crop",
+    ganeshaAlcove: "/assets/ganesha-gold.jpg",
     coupleSmall: couplePhoto,
     coupleFull: couplePhoto,
     doorVideo,

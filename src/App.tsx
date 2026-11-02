@@ -30,6 +30,10 @@ export default function App() {
       document.body.style.height = 'auto';
     }
 
+    if (inviteData.coupleNames) {
+      document.title = `Griha Pravesha Invitation | ${inviteData.coupleNames} - Dhwani`;
+    }
+
     return () => {
       document.body.style.overflow = 'auto';
       document.body.style.height = 'auto';
