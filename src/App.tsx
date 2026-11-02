@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import SplashDoor from './components/SplashDoor';
 import GaneshaHero from './components/GaneshaHero';
 import CoupleHero from './components/CoupleHero';
@@ -76,46 +77,45 @@ export default function App() {
         
         {/* STAGE 1: HOME PAGE WITH VIDEO + "TOUCH THE DOOR" */}
         {stage === 'home' && (
-          <SplashDoor
-            onTapDoor={handleEnterHome}
-            onSkip={handleSkip}
-            isPlaying={isPlaying}
-            isMuted={isMuted}
-            togglePlay={togglePlay}
-            toggleMute={toggleMute}
-            config={inviteData}
-          />
-        )}
-
-        {/* STAGES REVEALED AFTER GOING INSIDE */}
-        {(stage === 'hero' || stage === 'content') && (
-          <div className="w-full flex flex-col">
-            
-            {/* LORD GANESHA SANCTUM HERO */}
-            <div ref={heroRef} className="snap-start w-full">
-              <GaneshaHero
-                config={inviteData}
-                onScrollNext={handleScrollNext}
-              />
-            </div>
-
-            {/* ILLUSTRATED COUPLE HERO */}
-            <div ref={coupleRef} className="snap-start w-full">
-              <CoupleHero config={inviteData} />
-            </div>
-
-            {/* INVITATION + VERTICAL TIMELINE + DETAILS + FOOTER */}
-            <div className="w-full">
-              <InviteSection
-                config={inviteData}
-                isPlaying={isPlaying}
-                isMuted={isMuted}
-                togglePlay={togglePlay}
-                toggleMute={toggleMute}
-              />
-            </div>
+          <div className="fixed inset-0 z-40 w-full h-full pointer-events-auto">
+            <SplashDoor
+              onTapDoor={handleEnterHome}
+              onSkip={handleSkip}
+              isPlaying={isPlaying}
+              isMuted={isMuted}
+              togglePlay={togglePlay}
+              toggleMute={toggleMute}
+              config={inviteData}
+            />
           </div>
         )}
+
+        {/* STAGES: MOUNTED SO SCROLL CURTAIN UPWARD REVEALS SANCTUM DIRECTLY */}
+        <div className="w-full flex flex-col">
+          {/* LORD GANESHA SANCTUM HERO */}
+          <div ref={heroRef} className="snap-start w-full">
+            <GaneshaHero
+              config={inviteData}
+              onScrollNext={handleScrollNext}
+            />
+          </div>
+
+          {/* ILLUSTRATED COUPLE HERO */}
+          <div ref={coupleRef} className="snap-start w-full">
+            <CoupleHero config={inviteData} />
+          </div>
+
+          {/* INVITATION + VERTICAL TIMELINE + DETAILS + FOOTER */}
+          <div className="w-full">
+            <InviteSection
+              config={inviteData}
+              isPlaying={isPlaying}
+              isMuted={isMuted}
+              togglePlay={togglePlay}
+              toggleMute={toggleMute}
+            />
+          </div>
+        </div>
       </main>
     </div>
   );
