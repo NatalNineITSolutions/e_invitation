@@ -25,7 +25,7 @@ export default function InviteSection({
   return (
     <div id="invitation-section" className="relative w-full bg-paper-pattern text-brown select-none">
 
-      {/* STICKY HEADER */}
+      {/* STICKY HEADER (COMMENTED OUT)
       <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-cream/95 border-b border-gold/30 px-6 md:px-12 py-3 flex items-center justify-between shadow-xs">
         <span className="font-display font-bold text-xs md:text-sm uppercase tracking-[0.3em] text-maroon">
           {config.coupleNames}
@@ -39,6 +39,7 @@ export default function InviteSection({
           mode="header"
         />
       </header>
+      */}
 
       {/* TOP INVITATION BODY */}
       <div className="px-6 md:px-12 pt-10 pb-4 flex flex-col items-center text-center max-w-3xl mx-auto">
