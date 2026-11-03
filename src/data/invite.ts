@@ -223,8 +223,8 @@ export const inviteData: InviteConfig = {
       title: `${coupleNames}'s Griha Pravesha`,
       description: `Auspicious Housewarming ceremony of ${coupleNames} at ${city}.`,
       location: `${venueName}, ${city}`,
-      startDate: "20261111T100000",
-      endDate: "20261111T150000"
+      startDate: "20261213T043000",
+      endDate: "20261213T100000"
     }
   },
 
