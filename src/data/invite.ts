@@ -78,7 +78,7 @@ const blessingsOnlyNote = env.VITE_BLESSINGS_NOTE || "Your blessings are our gre
 
 const doorVideo = env.VITE_DOOR_VIDEO || "/f1.mp4";
 const couplePhoto = env.VITE_COUPLE_PHOTO || "/assets/Elegant Indian Housewarming Invitation.png";
-const audioUrl = env.VITE_AUDIO_URL || "https://cdn.pixabay.com/download/audio/2022/05/16/audio_c899d45367.mp3?filename=indian-meditation-ambient-flute-111100.mp3";
+const audioUrl = env.VITE_AUDIO_URL || "/nadaswaram.mp3";
 
 
 // Default program timeline items

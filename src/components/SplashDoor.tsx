@@ -4,6 +4,7 @@ import { Volume2, VolumeX, ChevronRight, Hand } from 'lucide-react';
 import { InviteConfig } from '../data/invite';
 
 interface SplashDoorProps {
+  onStartMusic?: () => void;
   onTapDoor: () => void;
   onSkip: () => void;
   isPlaying: boolean;
@@ -18,7 +19,8 @@ export default function SplashDoor({
   onSkip,
   isMuted,
   toggleMute,
-  config
+  config,
+  onStartMusic
 }: SplashDoorProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
@@ -30,13 +32,16 @@ export default function SplashDoor({
 
   // When user clicks "TOUCH THE DOOR", play video directly right here on the home screen
   const handleTouchDoor = () => {
+    if (onStartMusic) {
+      onStartMusic();
+    }
     endingTextTriggered.current = false;
     transitionTriggered.current = false;
     setShowEndingText(false);
     setIsTransitioning(false);
     const video = videoRef.current;
     if (video) {
-      video.muted = isMuted;
+      video.muted = true;
       video.currentTime = 0;
       video.play().then(() => {
         setIsPlayingVideo(true);
@@ -81,7 +86,7 @@ export default function SplashDoor({
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.muted = isMuted;
+      videoRef.current.muted = true;
     }
   }, [isMuted]);
 
@@ -98,6 +103,7 @@ export default function SplashDoor({
           key={videoSource}
           ref={videoRef}
           src={videoSource}
+          muted
           playsInline
           preload="auto"
           onTimeUpdate={handleTimeUpdate}
@@ -111,7 +117,7 @@ export default function SplashDoor({
       {/* TOP HEADER CONTROLS */}
       <header className="relative z-30 flex items-center justify-between px-4 sm:px-6 md:px-12 pt-4 sm:pt-6">
         <button
-          onClick={toggleMute}
+          onClick={() => { toggleMute(); if (!isPlaying) togglePlay(); }}
           aria-label={isMuted ? "Unmute sound" : "Mute sound"}
           className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-temple-black/85 backdrop-blur-md border border-[#8B6A1F]/60 text-gold hover:border-gold transition-colors text-[11px] sm:text-xs font-display tracking-wider cursor-pointer shadow-lg"
         >
