@@ -79,6 +79,7 @@ export default function App() {
         {stage === 'home' && (
           <div className="fixed inset-0 z-40 w-full h-full pointer-events-auto">
             <SplashDoor
+              onStartMusic={playAudio}
               onTapDoor={handleEnterHome}
               onSkip={handleSkip}
               isPlaying={isPlaying}
