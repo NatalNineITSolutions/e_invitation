@@ -15,7 +15,7 @@ export default function DetailsGrid({ config }: DetailsGridProps) {
       icon: Calendar,
       label: "DATE",
       primary: event.dateDisplay,
-      secondary: "Wednesday",
+      secondary: "Sunday",
     },
     {
       icon: Clock,
