@@ -43,6 +43,7 @@ export default function InviteSection({
 
       {/* TOP INVITATION BODY */}
       <div className="px-6 md:px-12 pt-10 pb-4 flex flex-col items-center text-center max-w-3xl mx-auto">
+        {/* TOGETHER WITH THEIR FAMILIES (COMMENTED OUT)
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -51,6 +52,7 @@ export default function InviteSection({
         >
           {config.subTitle}
         </motion.p>
+        */}
 
         <motion.h2
           initial={{ opacity: 0, scale: 0.95 }}
